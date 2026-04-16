@@ -7,7 +7,8 @@
     <application
         android:name=".LaundryLedgerApp"
         android:allowBackup="false"
-        android:label="Laundry Ledger"
+        android:label="@string/app_name"
+        android:icon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@android:style/Theme.DeviceDefault.NoActionBar">
         
