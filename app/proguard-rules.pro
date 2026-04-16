@@ -17,3 +17,7 @@
 # Room rules
 -keep class androidx.room.** { *; }
 -dontwarn androidx.room.**
+
+# Security Crypto rules
+-dontwarn com.google.errorprone.annotations.**
+-dontwarn com.google.crypto.tink.**
