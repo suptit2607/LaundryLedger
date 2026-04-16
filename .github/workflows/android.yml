@@ -21,15 +21,14 @@ jobs:
         distribution: 'temurin'
         cache: gradle
 
-    - name: Generate Gradle Wrapper
-      run: gradle wrapper --gradle-version 8.5
-
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v3
+      with:
+        gradle-version: '8.5'
 
     - name: Build with Gradle
       run: |
-        ./gradlew build --stacktrace > build_output.log 2>&1 || true
+        gradle build --stacktrace > build_output.log 2>&1 || true
         echo "=== EXCEPTION START ==="
         grep -A 50 "What went wrong:" build_output.log || true
         echo "---"
@@ -45,7 +44,7 @@ jobs:
         path: build_output.log
 
     - name: Build APK Version
-      run: ./gradlew assembleDebug --stacktrace --info
+      run: gradle assembleDebug --stacktrace --info
 
     - name: Upload APK
       uses: actions/upload-artifact@v4
