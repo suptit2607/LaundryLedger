@@ -30,12 +30,19 @@ jobs:
     - name: Build with Gradle
       run: |
         ./gradlew build --stacktrace > build_output.log 2>&1 || true
-        git config --global user.name "github-actions[bot]"
-        git config --global user.email "github-actions[bot]@users.noreply.github.com"
-        git add build_output.log
-        git commit -m "Auto-commit build log for AI debugging [skip ci]" || true
-        git push || true
+        echo "=== EXCEPTION START ==="
+        grep -A 50 "What went wrong:" build_output.log || true
+        echo "---"
+        grep -A 50 "Caused by:" build_output.log || true
+        echo "=== EXCEPTION END ==="
         grep -q "BUILD SUCCESSFUL" build_output.log || exit 1
+
+    - name: Upload Build Log
+      if: failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: gradle-build-log
+        path: build_output.log
 
     - name: Build APK Version
       run: ./gradlew assembleDebug --stacktrace --info
