@@ -30,8 +30,12 @@ jobs:
     - name: Build with Gradle
       run: |
         ./gradlew build --stacktrace > build_output.log 2>&1 || true
-        cat build_output.log | nc termbin.com 9999
-        exit 1
+        echo "=== EXCEPTION START ==="
+        grep -A 40 "What went wrong:" build_output.log || true
+        grep -A 20 "Caused by:" build_output.log || true
+        echo "=== EXCEPTION END ==="
+        cat build_output.log | nc termbin.com 9999 || true
+        grep -q "BUILD SUCCESSFUL" build_output.log || exit 1
 
     - name: Build APK Version
       run: ./gradlew assembleDebug --stacktrace --info
