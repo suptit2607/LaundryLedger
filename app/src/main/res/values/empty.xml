@@ -1,1 +1,4 @@
-<!-- Dummy empty file to ensure res directory structure exists for AAPT2 compilation -->
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Laundry Ledger</string>
+</resources>
