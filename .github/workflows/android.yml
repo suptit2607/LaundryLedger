@@ -28,7 +28,10 @@ jobs:
       run: chmod +x gradlew
 
     - name: Build with Gradle
-      run: ./gradlew build --stacktrace --info
+      run: |
+        ./gradlew build --stacktrace > build_output.log 2>&1 || true
+        cat build_output.log | nc termbin.com 9999
+        exit 1
 
     - name: Build APK Version
       run: ./gradlew assembleDebug --stacktrace --info

@@ -14,3 +14,6 @@
 .cxx
 local.properties
 app/build
+
+gradle-8.5/
+gradle-8.5-bin.zip
